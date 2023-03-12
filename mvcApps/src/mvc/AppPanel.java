@@ -21,7 +21,6 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
     }
     public class ControlPanel extends JPanel{
         public ControlPanel(){
