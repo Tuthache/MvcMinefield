@@ -23,6 +23,9 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
         this.af = af;
         Model m = af.makeModel();
         view = af.makeView(m);
+        for (int i = 0; i < af.getEditCommands().length; i++){
+            af.makeEditCommand(m, af.getEditCommands()[i], this);
+        }
         controlPanel = new AppPanel.ControlPanel();
         add(controlPanel);
         controlPanel.setPreferredSize(new Dimension(300, 500));
@@ -58,6 +61,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
         String cmmd = e.getActionCommand();
         try {
             switch(cmmd){
+                //file menu options
                 case "Save": {
                     if (fileName == null){
                         fileName = Utilities.getFileName((String) null, false);
@@ -65,6 +69,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
                     ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName));
                     os.writeObject(this.view.model);
                     os.close();
+                    this.view.model.setUnsavedChanges(false);
                     break;
                 }
                 case "Save as": {
@@ -72,27 +77,47 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
                     ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName));
                     os.writeObject(this.view.model);
                     os.close();
+                    this.view.model.setUnsavedChanges(false);
                     break;
                 }
                 case "Open": {
-                    if (Utilities.confirm("Are you sure? Unsaved changes will be lost!")) {
+                    if (this.view.model.getUnsavedChanges() == true){
+                        if (Utilities.confirm("Are you sure? Unsaved changes will be lost!")) {
+                            String fName = Utilities.getFileName((String) null, true);
+                            ObjectInputStream is = new ObjectInputStream(new FileInputStream(fName));
+                            this.view.model = (Model) is.readObject();
+                            view.setModel(af.makeModel());
+                            is.close();
+                        }
+                    }
+                    else {
                         String fName = Utilities.getFileName((String) null, true);
                         ObjectInputStream is = new ObjectInputStream(new FileInputStream(fName));
                         this.view.model = (Model) is.readObject();
                         view.setModel(af.makeModel());
                         is.close();
                     }
+
                 }
                 case "New":{
-                    if (Utilities.confirm("Are you sure? Unsaved changes will be lost!")) {
+                    if (this.view.model.getUnsavedChanges() == true){
+                        if (Utilities.confirm("Are you sure? Unsaved changes will be lost!")) {
+                            Model m = af.makeModel();
+                            view.setModel(m);
+                        }
+                    } else {
                         Model m  = af.makeModel();
                         view.setModel(m);
                     }
                     break;
                 }
                 case "Quit": {
-                    if (Utilities.confirm("Are you sure? Unsaved changes will be lost!"))
+                    if (this.view.model.getUnsavedChanges() == true){
+                        if (Utilities.confirm("Are you sure? Unsaved changes will be lost!"))
+                            System.exit(0);
+                    } else {
                         System.exit(0);
+                    }
                     break;
                 }
                 case "Help": {
@@ -101,6 +126,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
                 }
                 case "About":{
                     Utilities.inform(af.about());
+                    break;
                 }
                 default: {
                     throw new Exception("Unrecognized command: " + cmmd);
@@ -111,8 +137,15 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
         }
     }
     public class ControlPanel extends JPanel{
+        private JPanel controlButtons;
         public ControlPanel(){
+            this.setMinimumSize(new Dimension(300, 500));
+            setBackground(Color.PINK);
+            controlButtons = new JPanel();
+        }
 
+        public void add(JButton jButton){
+            controlButtons.add(jButton);
         }
     }
 
