@@ -7,13 +7,13 @@ import java.beans.PropertyChangeListener;
 
 public class View extends JPanel implements PropertyChangeListener {
 
-    public Model model;
+    protected Model model;
     public View(Model m){
         this.model = m;
         model.addPropertyChangeListener(this);
     }
     public void setModel(Model model){
-        model.removePropertyChangeListener(this);
+        this.model.removePropertyChangeListener(this);
         this.model = model;
         this.model.initSupport();
         this.model.addPropertyChangeListener(this);
@@ -22,8 +22,5 @@ public class View extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         repaint();
-    }
-    public void paintComponent(Graphics gc){
-        super.paintComponent(gc);
     }
 }
