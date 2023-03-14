@@ -32,13 +32,6 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
         add(view);
         view.setPreferredSize(new Dimension(500, 500));
 
-        SafeFrame frame = new SafeFrame();
-        Container cp = frame.getContentPane();
-        cp.add(this);
-        frame.setJMenuBar(this.createMenuBar());
-        frame.setTitle(af.getTitle());
-        frame.setSize(1000, 500);
-        frame.setVisible(true);
     }
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -63,44 +56,19 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
             switch(cmmd){
                 //file menu options
                 case "Save": {
-                    if (fileName == null){
-                        fileName = Utilities.getFileName((String) null, false);
-                    }
-                    ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName));
-                    os.writeObject(this.view.model);
-                    os.close();
-                    this.view.model.setUnsavedChanges(false);
+                    Utilities.save(view.model, view.model.getUnsavedChanges());
                     break;
                 }
                 case "Save as": {
-                    fileName = Utilities.getFileName((String) null, false);
-                    ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName));
-                    os.writeObject(this.view.model);
-                    os.close();
-                    this.view.model.setUnsavedChanges(false);
+                    Utilities.save(view.model, true);
                     break;
                 }
                 case "Open": {
-                    if (this.view.model.getUnsavedChanges() == true){
-                        if (Utilities.confirm("Are you sure? Unsaved changes will be lost!")) {
-                            String fName = Utilities.getFileName((String) null, true);
-                            ObjectInputStream is = new ObjectInputStream(new FileInputStream(fName));
-                            this.view.model = (Model) is.readObject();
-                            view.setModel(af.makeModel());
-                            is.close();
-                        }
-                    }
-                    else {
-                        String fName = Utilities.getFileName((String) null, true);
-                        ObjectInputStream is = new ObjectInputStream(new FileInputStream(fName));
-                        this.view.model = (Model) is.readObject();
-                        view.setModel(af.makeModel());
-                        is.close();
-                    }
-
+                    view.model = Utilities.open(view.model);
+                    break;
                 }
                 case "New":{
-                    if (this.view.model.getUnsavedChanges() == true){
+                    if (this.view.model.getUnsavedChanges()){
                         if (Utilities.confirm("Are you sure? Unsaved changes will be lost!")) {
                             Model m = af.makeModel();
                             view.setModel(m);
@@ -112,7 +80,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
                     break;
                 }
                 case "Quit": {
-                    if (this.view.model.getUnsavedChanges() == true){
+                    if (this.view.model.getUnsavedChanges() ){
                         if (Utilities.confirm("Are you sure? Unsaved changes will be lost!"))
                             System.exit(0);
                     } else {
@@ -150,6 +118,12 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
     }
 
     public void display(){
-        AppPanel output = new AppPanel(af);
+        SafeFrame frame = new SafeFrame();
+        Container cp = frame.getContentPane();
+        cp.add(this);
+        frame.setJMenuBar(this.createMenuBar());
+        frame.setTitle(af.getTitle());
+        frame.setSize(1000, 500);
+        frame.setVisible(true);
     }
 }
