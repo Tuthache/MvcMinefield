@@ -6,10 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 public class AppPanel extends JPanel implements ActionListener, PropertyChangeListener {
     private AppFactory af;
@@ -23,9 +19,6 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
         this.af = af;
         Model m = af.makeModel();
         view = af.makeView(m);
-        for (int i = 0; i < af.getEditCommands().length; i++){
-            Command command = af.makeEditCommand(m, af.getEditCommands()[i], this);
-        }
         controlPanel = new AppPanel.ControlPanel();
         add(controlPanel);
         controlPanel.setPreferredSize(new Dimension(300, 500));
