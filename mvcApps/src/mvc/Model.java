@@ -5,7 +5,6 @@ public class Model extends Bean{
     public String fileName = null;
 
     public void changed(){
-        boolean unsavedChanges = true;
         firePropertyChange(null, null, null);
     }
 
