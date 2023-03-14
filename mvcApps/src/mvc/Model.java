@@ -1,6 +1,6 @@
 package mvc;
 
-public class Model extends Bean{
+abstract public class Model extends Bean{
     private boolean unsavedChanges = false;
     public String fileName = null;
 
