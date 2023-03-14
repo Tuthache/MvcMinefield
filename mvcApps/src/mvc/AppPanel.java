@@ -64,7 +64,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
                     break;
                 }
                 case "Open": {
-                    view.model = Utilities.open(view.model);
+                    view.setModel(Utilities.open(view.model));
                     break;
                 }
                 case "New":{
@@ -117,10 +117,6 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
             this.setMinimumSize(new Dimension(300, 500));
             setBackground(Color.PINK);
             controlButtons = new JPanel();
-        }
-
-        public void add(JButton jButton){
-            controlButtons.add(jButton);
         }
     }
 
