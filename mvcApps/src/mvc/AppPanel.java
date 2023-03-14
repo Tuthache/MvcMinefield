@@ -9,7 +9,7 @@ import java.beans.PropertyChangeListener;
 
 public class AppPanel extends JPanel implements ActionListener, PropertyChangeListener {
     private AppFactory af;
-    private View view;
+    protected View view;
     public AppPanel.ControlPanel controlPanel;
     private String fileName;
     private boolean unsavedChanges;
@@ -49,7 +49,11 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
             switch(cmmd){
                 //file menu options
                 case "Save": {
-                    Utilities.save(view.model, view.model.getUnsavedChanges());
+                    if (fileName == null){
+                        Utilities.save(view.model, false);
+                    } else {
+                        Utilities.save(view.model, true);
+                    }
                     break;
                 }
                 case "Save as": {
@@ -74,8 +78,9 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
                 }
                 case "Quit": {
                     if (this.view.model.getUnsavedChanges()){
-                        if (Utilities.confirm("Are you sure? Unsaved changes will be lost!"))
+                        if (Utilities.confirm("Are you sure? Unsaved changes will be lost!")) {
                             System.exit(0);
+                        }
                     } else {
                         System.exit(0);
                     }
@@ -90,7 +95,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
                     break;
                 }
                 default: {
-                    Command chosenCommand = af.makeEditCommand(view.model, cmmd, this);
+                    Command chosenCommand = af.makeEditCommand(view.model, cmmd, e.getSource());
                     if (chosenCommand != null){
                         chosenCommand.execute();
                     }

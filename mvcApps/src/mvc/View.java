@@ -7,7 +7,7 @@ import java.beans.PropertyChangeListener;
 
 public class View extends JPanel implements PropertyChangeListener {
 
-    protected Model model;
+    public Model model;
     public View(Model m){
         this.model = m;
         model.addPropertyChangeListener(this);

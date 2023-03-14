@@ -1,6 +1,6 @@
 package mvc;
 
-public class Command {
+abstract public class Command {
     public Model model;
     public void execute(){
     }

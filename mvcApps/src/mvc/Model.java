@@ -6,6 +6,7 @@ public class Model extends Bean{
 
     public void changed(){
         firePropertyChange(null, null, null);
+        unsavedChanges = true;
     }
 
     public String getFileName(){
