@@ -24,7 +24,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
         Model m = af.makeModel();
         view = af.makeView(m);
         for (int i = 0; i < af.getEditCommands().length; i++){
-            af.makeEditCommand(m, af.getEditCommands()[i], this);
+            Command command = af.makeEditCommand(m, af.getEditCommands()[i], this);
         }
         controlPanel = new AppPanel.ControlPanel();
         add(controlPanel);
@@ -38,7 +38,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
         repaint();
     }
 
-    protected JMenuBar createMenuBar(){
+    protected JMenuBar createMenuBar() {
         JMenuBar result = new JMenuBar();
         JMenu fileMenu = Utilities.makeMenu("File", new String[]{"New", "Save", "Save as", "Open", "Quit"}, this);
         JMenu editMenu = Utilities.makeMenu("Edit", af.getEditCommands(), this);
@@ -80,7 +80,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
                     break;
                 }
                 case "Quit": {
-                    if (this.view.model.getUnsavedChanges() ){
+                    if (this.view.model.getUnsavedChanges()){
                         if (Utilities.confirm("Are you sure? Unsaved changes will be lost!"))
                             System.exit(0);
                     } else {
@@ -97,7 +97,14 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
                     break;
                 }
                 default: {
-                    throw new Exception("Unrecognized command: " + cmmd);
+                    Command chosenCommand = af.makeEditCommand(view.model, cmmd, this);
+                    if (chosenCommand != null){
+                        chosenCommand.execute();
+                    }
+                    else {
+                        throw new Exception("Unrecognized command: " + cmmd);
+                    }
+
                 }
             }
         } catch (Exception ex) {
