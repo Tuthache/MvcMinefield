@@ -9,7 +9,7 @@ There will be 80 mines on the minefield or 20% of 400 cells
 
 For testing purposes use NumberOfMines = 5 and gridSize = 5
  */
-public class MineField {
+public class MineField extends Model{
     final private int NumberOfMines = 10;    //Total amount of mines on the minefield
     final private int gridSize = 5;    //length and width of grid
     private static Cell[][] grid;  //The grid in which the player is on
