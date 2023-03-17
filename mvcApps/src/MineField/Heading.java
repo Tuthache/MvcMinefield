@@ -1,8 +1,12 @@
 package MineField;
 
 public enum Heading {
-    NORTH,
-    SOUTH,
-    WEST,
-    EAST
+    N,
+    NE,
+    NW,
+    S,
+    SE,
+    SW,
+    W,
+    E
 }
