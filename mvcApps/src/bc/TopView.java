@@ -18,7 +18,6 @@ public class TopView extends View {
         gc.drawString("Top View", 10, 10);
         gc.setColor(Color.RED);
         gc.fillRect(15, 15, (int)x, (int)y);
-
         gc.setColor(oldColor);
     }
 }
