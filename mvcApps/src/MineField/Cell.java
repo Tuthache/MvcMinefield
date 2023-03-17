@@ -1,6 +1,8 @@
 package MineField;
 
-public class Cell {
+import javax.swing.*;
+
+public class Cell extends JPanel{
     private boolean hasMine;    //if true has a bomb, if not no bomb on cell
     private boolean hasTraversed;   //if true set cell to white, if not black
     private int minesNearby;
