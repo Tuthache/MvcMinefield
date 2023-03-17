@@ -1,7 +1,7 @@
 package MineField;
 import mvc.*;
 
-public class MineFieldFactory extends AppFactory{
+public class MineFieldFactory implements AppFactory{
     public Model makeModel(){
         return new MineField();
     }
@@ -28,10 +28,49 @@ public class MineFieldFactory extends AppFactory{
         return new String[] {"N", "NE", "NW","E", "W", "S", "SE", "SW"};
     }
     public Command makeEditCommand(Model model, String name, Object object){
+        Command action = null;
         switch(name){
             case "N": {
-                return new moveCommand(model);
+                action = new MoveCommand((MineField)model);
+                ((MoveCommand) action).setMove(0,-1);
+                return action;
+            }
+            case "NE": {
+                action = new MoveCommand((MineField)model);
+                ((MoveCommand) action).setMove(1,-1);
+                return action;
+            }
+            case "NW": {
+                action = new MoveCommand((MineField)model);
+                ((MoveCommand) action).setMove(-1,-1);
+                return action;
+            }
+            case "W": {
+                action = new MoveCommand((MineField)model);
+                ((MoveCommand) action).setMove(-1,0);
+                return action;
+            }
+            case "E": {
+                action = new MoveCommand((MineField)model);
+                ((MoveCommand) action).setMove(1,0);
+                return action;
+            }
+            case "S": {
+                action = new MoveCommand((MineField)model);
+                ((MoveCommand) action).setMove(0,1);
+                return action;
+            }
+            case "SE": {
+                action = new MoveCommand((MineField)model);
+                ((MoveCommand) action).setMove(1,1);
+                return action;
+            }
+            case "SW": {
+                action = new MoveCommand((MineField)model);
+                ((MoveCommand) action).setMove(-1,1);
+                return action;
             }
         }
+        return null;
     }
 }

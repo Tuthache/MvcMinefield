@@ -2,46 +2,20 @@ package MineField;
 
 import mvc.*;
 
-public class moveCommand extends Command{
-    public moveCommand(Model m){
+public class MoveCommand extends Command{
+    private int x;
+    private int y;
+    public MoveCommand(Model m){
         super(m);
     }
 
     public void execute(){
         MineField mineField = (MineField) model;
-        mineField.move();
+        mineField.move(x, y);
     }
-    public void move(){
-        Heading heading = mineField.getHeading();
-        switch(heading){
-            case "N":{
-                return
-            }
-            case "NE":{
-
-            }
-            case "NW":{
-
-            }
-            case "E":{
-
-            }
-            case "W":{
-
-            }
-            case "S":{
-
-            }
-            case "SE":{
-
-            }
-            case "SW":{
-
-            }
-            default: {
-                
-            }
-        }
+    public void setMove(int x, int y){
+        this.x = x;
+        this.y = y;
     }
 
 }
