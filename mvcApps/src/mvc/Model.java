@@ -1,12 +1,12 @@
 package mvc;
 
-public class Model extends Bean{
+abstract public class Model extends Bean{
     private boolean unsavedChanges = false;
     public String fileName = null;
 
     public void changed(){
-        boolean unsavedChanges = true;
         firePropertyChange(null, null, null);
+        unsavedChanges = true;
     }
 
     public String getFileName(){
