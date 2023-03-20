@@ -27,6 +27,8 @@ public class MineField extends Model{
         player = grid[0][0];
         goal = grid[gridSize-1][gridSize-1];
         generateMines(grid);
+        generateNearbyMines(grid);
+        //printMatrix(grid);
     }
     //Helper method that fills grid with empty cells
     public void fillGrid(Cell[][] grid){
@@ -51,10 +53,173 @@ public class MineField extends Model{
         }
         //printMatrix(grid);
     }
-    //In progress, generates number of mines nearby
+    //Unoptimized, generates number of mines nearby. For each
+    //cell we must check where the cell is, to check nearby cells
     public void generateNearbyMines(Cell[][] grid){
         for(int row = 0; row < gridSize; row++) {
             for (int col = 0; col < gridSize; col++) {
+                int count = 0;
+                switch(row){
+                    case 0:
+                        switch(col) {
+                            case 0:     //top left corner
+                                if (grid[row + 1][col].getHasMine() == true) {
+                                    count++;
+                                }
+                                if (grid[row][col + 1].getHasMine() == true) {
+                                    count++;
+                                }
+                                if (grid[row + 1][col + 1].getHasMine() == true) {
+                                    count++;
+                                }
+                                grid[row][col].setMinesNearby(count);
+                                break;
+                            case gridSize - 1:      //top right corner
+                                if(grid[row][col-1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row+1][col].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row+1][col-1].getHasMine() == true){
+                                    count++;
+                                }
+                                grid[row][col].setMinesNearby(count);
+                                break;
+                            default:    //top-most row, excluding corners
+                                if(grid[row][col-1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row+1][col-1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row+1][col].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row+1][col+1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row][col+1].getHasMine() == true){
+                                    count++;
+                                }
+                                grid[row][col].setMinesNearby(count);
+                                break;
+                        }
+                        break;
+                    case gridSize-1:
+                        switch(col){
+                            case 0:     //bottom left corner
+                                if(grid[row-1][col].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row-1][col+1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row][col+1].getHasMine() == true){
+                                    count++;
+                                }
+                                grid[row][col].setMinesNearby(count);
+                                break;
+                            case gridSize-1:    //bottom right corner
+                                if(grid[row][col-1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row-1][col-1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row-1][col].getHasMine() == true){
+                                    count++;
+                                }
+                                grid[row][col].setMinesNearby(count);
+                                break;
+                            default:    //bottom-most row, excluding corners
+                                if(grid[row][col-1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row-1][col-1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row-1][col].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row-1][col+1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row][col+1].getHasMine() == true){
+                                    count++;
+                                }
+                                grid[row][col].setMinesNearby(count);
+                                break;
+                        }
+                        break;
+                    default:
+                        switch(col){
+                            case 0:     //left-most column
+                                if(grid[row-1][col].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row-1][col+1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row][col+1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row+1][col+1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row+1][col].getHasMine() == true){
+                                    count++;
+                                }
+                                grid[row][col].setMinesNearby(count);
+                                break;
+                            case gridSize-1:    //right-most column
+                                if(grid[row-1][col].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row-1][col-1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row][col-1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row+1][col-1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row+1][col].getHasMine() == true){
+                                    count++;
+                                }
+                                grid[row][col].setMinesNearby(count);
+                                break;
+                            default:    //All cells that are not corners/sides
+                                if(grid[row-1][col-1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row-1][col].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row-1][col+1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row][col+1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row+1][col+1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row+1][col].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row+1][col-1].getHasMine() == true){
+                                    count++;
+                                }
+                                if(grid[row][col-1].getHasMine() == true){
+                                    count++;
+                                }
+                                grid[row][col].setMinesNearby(count);
+                                break;
+                        }
+                        break;
+                }
             }
         }
     }
@@ -62,7 +227,14 @@ public class MineField extends Model{
     public static void printMatrix(Cell[][] grid){
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
-                System.out.print(grid[i][j].toString() + " ");
+                System.out.print(grid[i][j].getMinesNearby() + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                System.out.print(grid[i][j].getHasMine()+ " ");
             }
             System.out.println();
         }
