@@ -23,9 +23,9 @@ public class MineField {
         Cell[][] grid = new Cell[gridSize][gridSize];
         heading = Heading.E;
         traversed = new HashSet<Cell>();
-        fillGrid(grid);
         player = grid[0][0];
         goal = grid[gridSize-1][gridSize-1];
+        fillGrid(grid);
         generateMines(grid);
         generateNearbyMines(grid);
         //printMatrix(grid);
