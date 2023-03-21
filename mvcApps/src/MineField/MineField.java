@@ -1,6 +1,8 @@
 package MineField;
 
 import mvc.*;
+
+import javax.swing.*;
 import java.util.*;
 
 /*Parameters:
@@ -13,11 +15,37 @@ public class MineField extends Model{
     final private int NumberOfMines = 10;    //Total amount of mines on the minefield
     final private int gridSize = 5;    //length and width of grid
     private static Cell[][] grid;  //The grid in which the player is on
-    private Cell player, goal;    //The cell that the player is on, The cell that is the goal to reach
+    protected Cell player, goal;    //The cell that the player is on, The cell that is the goal to reach
     private Heading heading;    //The heading of the player
     private Random rand = new Random(); //Creates random object
     private Set<Cell> traversed;    // Set that contains all traversed cells
-
+    public void setHeading(Heading heading){
+        this.heading = heading;
+        firePropertyChange("heading",null, heading);
+    }
+    public Heading getHeading(){
+        return heading;
+    }
+    public Cell getPlayer(){
+        return player;
+    }
+    public void move(int x, int y){
+        player = grid[x][y];
+        if (!player.getHasTraversed()){
+            showCell(x,y);
+        }
+    }
+    public void showCell(int x, int y){
+        Cell current = grid[x][y];
+        if(!current.getHasTraversed()){
+            current.setHasTraversed(true);
+            if (current == goal){
+                JOptionPane.showMessageDialog(null, "You beat the game!");
+            } else if (current.getHasMine()){
+                JOptionPane.showMessageDialog(null, "You hit a mine!");
+            }
+        }
+    }
     //Creates the Minefield Object
     public MineField() {
         Cell[][] grid = new Cell[gridSize][gridSize];
