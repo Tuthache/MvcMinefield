@@ -12,8 +12,8 @@ There will be 80 mines on the minefield or 20% of 400 cells
 For testing purposes use NumberOfMines = 5 and gridSize = 5
  */
 public class MineField extends Model{
-    final private int NumberOfMines = 10;    //Total amount of mines on the minefield
-    final private int gridSize = 5;    //length and width of grid
+    private int NumberOfMines;    //Total amount of mines on the minefield
+    private int gridSize;    //length and width of grid
     private static Cell[][] grid;  //The grid in which the player is on
     protected Cell player, goal;    //The cell that the player is on, The cell that is the goal to reach
     private Heading heading;    //The heading of the player
@@ -22,6 +22,12 @@ public class MineField extends Model{
     public void setHeading(Heading heading){
         this.heading = heading;
         firePropertyChange("heading",null, heading);
+    }
+    public Cell[][] getGrid(){
+        return grid;
+    }
+    public int getGridSize(){
+        return gridSize;
     }
     public Heading getHeading(){
         return heading;
@@ -47,7 +53,7 @@ public class MineField extends Model{
         }
     }
     //Creates the Minefield Object
-    public MineField() {
+    public MineField(int gridSize, int numberOfMines) {
         Cell[][] grid = new Cell[gridSize][gridSize];
         heading = Heading.E;
         traversed = new HashSet<Cell>();
@@ -85,6 +91,21 @@ public class MineField extends Model{
     //cell we must check where the cell is, to check nearby cells
     public void generateNearbyMines(Cell[][] grid){
         for(int row = 0; row < gridSize; row++) {
+            for(int col = 0; col < gridSize; col++) {
+                int nearbyMines = 0;
+                for(int i = row-1; i <= row+1; i++) {
+                    for(int j = col-1; j <= col+1; j++) {
+                        if(i >= 0 && i < gridSize && j >= 0 && j < gridSize) {
+                            if(grid[i][j].getHasMine()) {
+                                nearbyMines++;
+                            }
+                        }
+                    }
+                }
+                grid[row][col].setMinesNearby(nearbyMines);
+            }
+        }
+        /*for(int row = 0; row < gridSize; row++) {
             for (int col = 0; col < gridSize; col++) {
                 int count = 0;
                 switch(row){
@@ -249,7 +270,7 @@ public class MineField extends Model{
                         break;
                 }
             }
-        }
+        }*/
     }
     //Helper method that prints out matrix
     public static void printMatrix(Cell[][] grid){
@@ -268,6 +289,6 @@ public class MineField extends Model{
         }
     }
     public static void main(String[] args){
-        MineField minefield = new MineField();
+        MineField minefield = new MineField(10, 25);
     }
 }

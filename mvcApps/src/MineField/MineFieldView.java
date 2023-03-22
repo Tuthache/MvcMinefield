@@ -9,11 +9,11 @@ public class MineFieldView extends View{
     public MineFieldView(MineField m) {
 
         super(m);
-        int dim = m.getDim();
-        cells = new Cell[dim][dim];
-        setLayout(new GridLayout(dim,dim));
-        for(int row = 0; row < dim; row++) {
-            for(int col = 0; col < dim; col++) {
+        int size = m.getGridSize();
+        cells = m.getGrid();
+        setLayout(new GridLayout(size,size));
+        for(int row = 0; row < size; row++) {
+            for(int col = 0; col < size; col++) {
                 cells[row][col] = new Cell(cells[row][col].getHasMine(), cells[row][col].getHasTraversed(), cells[row][col].getMinesNearby());
                 cells[row][col].setText("?");
                 cells[row][col].setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -29,7 +29,7 @@ public class MineFieldView extends View{
                 this.add(cells[row][col]);
             }
         }
-        setPreferredSize(new Dimension(dim * 40, dim * 40));
+        setPreferredSize(new Dimension(size * 40, size * 40));
     }
     public void paintComponent(Graphics gc) {
         super.paintComponent(gc);

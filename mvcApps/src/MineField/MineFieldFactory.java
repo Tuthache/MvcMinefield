@@ -3,7 +3,7 @@ import mvc.*;
 
 public class MineFieldFactory implements AppFactory{
     public Model makeModel(){
-        return new MineField();
+        return new MineField(20, 30);
     }
     public View makeView(Model m){
         return new MineFieldView((MineField) m);
