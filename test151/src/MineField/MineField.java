@@ -22,10 +22,6 @@ public class MineField extends Model{
     private Heading heading;    //The heading of the player
     private Random rand = new Random(); //Creates random object
     private Set<Cell> traversed;    // Set that contains all traversed cells
-    public void setHeading(Heading heading){
-        this.heading = heading;
-        firePropertyChange("heading",null, heading);
-    }
     public Cell[][] getGrid(){
         return grid;
     }
@@ -37,9 +33,6 @@ public class MineField extends Model{
     }
     public int getGridSize(){
         return gridSize;
-    }
-    public Heading getHeading(){
-        return heading;
     }
     public Cell getPlayer(){
         return player;

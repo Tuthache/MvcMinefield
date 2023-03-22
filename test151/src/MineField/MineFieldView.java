@@ -37,14 +37,14 @@ public class MineFieldView extends View{
                 }
                 if (cells[row][col] == cells[field.getPlayerX()][field.getPlayerY()]){
                     cells[row][col].setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+                    cells[row][col].setText(""+ cells[row][col].toString());
                     if (cells[row][col] == cells[size-1][size-1]){
                         cells[row][col].setBorder(BorderFactory.createLineBorder(Color.BLUE));
                     }
                 }
-                this.add(cells[row][col]);
+                add(cells[row][col]);
             }
         }
         revalidate();
-
     }
 }
