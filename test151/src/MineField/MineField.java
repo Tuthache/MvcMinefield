@@ -18,6 +18,7 @@ public class MineField extends Model{
     private int gridSize;    //length and width of grid
     private static Cell[][] grid;  //The grid in which the player is on
     protected Cell player, goal;    //The cell that the player is on, The cell that is the goal to reach
+    private int playerX, playerY;
     private Heading heading;    //The heading of the player
     private Random rand = new Random(); //Creates random object
     private Set<Cell> traversed;    // Set that contains all traversed cells
@@ -37,10 +38,44 @@ public class MineField extends Model{
     public Cell getPlayer(){
         return player;
     }
-    public void move(int x, int y){
-        player = grid[x][y];
-        if (!player.getHasTraversed()){
-            showCell(x,y);
+    public void move(Heading heading){
+        switch (heading){
+            case N: {
+                playerY--;
+                break;
+            }
+            case NE: {
+                playerY--;
+                playerX++;
+                break;
+            }
+            case NW: {
+                playerY--;
+                playerX--;
+                break;
+            }
+            case W: {
+                playerX--;
+                break;
+            }
+            case E: {
+                playerX++;
+                break;
+            }
+            case S: {
+                playerY++;
+                break;
+            }
+            case SE: {
+                playerY++;
+                playerX++;
+                break;
+            }
+            case SW: {
+                playerY++;
+                playerX--;
+                break;
+            }
         }
     }
     public void showCell(int x, int y){
