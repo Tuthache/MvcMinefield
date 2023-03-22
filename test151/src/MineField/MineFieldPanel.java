@@ -44,27 +44,6 @@ public class MineFieldPanel extends AppPanel{
         sw.addActionListener(this);
         controlPanel.add(sw);
     }
-    public void actionPerformed(ActionEvent action){
-        super.actionPerformed(action);
-        MineField object = (MineField) view.model;
-        if (action.getSource() == n){
-            object.setHeading(Heading.N);
-        } else if (action.getSource() == ne) {
-            object.setHeading(Heading.NE);
-        } else if (action.getSource() == nw) {
-            object.setHeading(Heading.NW);
-        } else if (action.getSource() == w) {
-            object.setHeading(Heading.W);
-        } else if (action.getSource() == e) {
-            object.setHeading(Heading.E);
-        } else if (action.getSource() == s) {
-            object.setHeading(Heading.S);
-        } else if (action.getSource() == se) {
-            object.setHeading(Heading.SE);
-        } else if (action.getSource() == sw) {
-            object.setHeading(Heading.SW);
-        }
-    }
     public static void main(String[] args){
         AppFactory factory = new MineFieldFactory();
         AppPanel panel = new MineFieldPanel(factory);

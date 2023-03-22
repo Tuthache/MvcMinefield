@@ -31,43 +31,35 @@ public class MineFieldFactory implements AppFactory{
         Command action = null;
         switch(name){
             case "N": {
-                action = new MoveCommand((MineField)model);
-                ((MoveCommand) action).setMove(0,-1);
+                action = new MoveCommand((MineField)model, Heading.N);
                 return action;
             }
             case "NE": {
-                action = new MoveCommand((MineField)model);
-                ((MoveCommand) action).setMove(1,-1);
+                action = new MoveCommand((MineField)model, Heading.NE);
                 return action;
             }
             case "NW": {
-                action = new MoveCommand((MineField)model);
-                ((MoveCommand) action).setMove(-1,-1);
+                action = new MoveCommand((MineField)model, Heading.NW);
                 return action;
             }
             case "W": {
-                action = new MoveCommand((MineField)model);
-                ((MoveCommand) action).setMove(-1,0);
+                action = new MoveCommand((MineField)model, Heading.W);
                 return action;
             }
             case "E": {
-                action = new MoveCommand((MineField)model);
-                ((MoveCommand) action).setMove(1,0);
+                action = new MoveCommand((MineField)model, Heading.E);
                 return action;
             }
             case "S": {
-                action = new MoveCommand((MineField)model);
-                ((MoveCommand) action).setMove(0,1);
+                action = new MoveCommand((MineField)model, Heading.S);
                 return action;
             }
             case "SE": {
-                action = new MoveCommand((MineField)model);
-                ((MoveCommand) action).setMove(1,1);
+                action = new MoveCommand((MineField)model, Heading.SE);
                 return action;
             }
             case "SW": {
-                action = new MoveCommand((MineField)model);
-                ((MoveCommand) action).setMove(-1,1);
+                action = new MoveCommand((MineField)model, Heading.SW);
                 return action;
             }
         }
