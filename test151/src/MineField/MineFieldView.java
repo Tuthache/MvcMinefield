@@ -22,6 +22,7 @@ public class MineFieldView extends View{
                 cells[row][col] = new Cell(cells[row][col].getHasMine(), cells[row][col].getHasTraversed(), cells[row][col].getMinesNearby());
                 cells[row][col].setText("?");
                 cells[row][col].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                field.showCell(field.getPlayerX(), field.getPlayerY());
                 if (cells[row][col].getHasTraversed()){
                     field.showCell(row, col);
                     cells[row][col].setBackground(Color.WHITE);

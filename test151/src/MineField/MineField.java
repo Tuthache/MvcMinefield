@@ -39,40 +39,48 @@ public class MineField extends Model{
     }
     public void move(Heading heading){
         switch (heading){
-            case N: {
+            case W: {
                 playerY--;
+                changed();
                 break;
             }
-            case NE: {
+            case SW: {
                 playerY--;
                 playerX++;
+                changed();
                 break;
             }
             case NW: {
                 playerY--;
                 playerX--;
+                changed();
                 break;
             }
-            case W: {
+            case N: {
                 playerX--;
-                break;
-            }
-            case E: {
-                playerX++;
+                changed();
                 break;
             }
             case S: {
+                playerX++;
+                changed();
+                break;
+            }
+            case E: {
                 playerY++;
+                changed();
                 break;
             }
             case SE: {
                 playerY++;
                 playerX++;
+                changed();
                 break;
             }
-            case SW: {
+            case NE: {
                 playerY++;
                 playerX--;
+                changed();
                 break;
             }
         }
@@ -85,6 +93,8 @@ public class MineField extends Model{
                 JOptionPane.showMessageDialog(null, "You beat the game!");
             } else if (current.getHasMine()){
                 JOptionPane.showMessageDialog(null, "You hit a mine!");
+            } else {
+                current.setText(Integer.toString(current.getMinesNearby()));
             }
         }
     }
