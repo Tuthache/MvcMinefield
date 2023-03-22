@@ -29,6 +29,12 @@ public class MineField extends Model{
     public Cell[][] getGrid(){
         return grid;
     }
+    public int getPlayerX(){
+        return playerX;
+    }
+    public int getPlayerY(){
+        return playerY;
+    }
     public int getGridSize(){
         return gridSize;
     }
@@ -93,6 +99,8 @@ public class MineField extends Model{
     public MineField(int gridSize, int numberOfMines) {
         this.gridSize = gridSize;
         this.NumberOfMines = numberOfMines;
+        this.playerX = 0;
+        this.playerY = 0;
         grid = new Cell[gridSize][gridSize];
         heading = Heading.E;
         traversed = new HashSet<Cell>();

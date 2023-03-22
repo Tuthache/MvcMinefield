@@ -11,7 +11,7 @@ public class MoveCommand extends Command{
 
     public void execute(){
         MineField mineField = (MineField) model;
-        mineField.move(mineField.getHeading());
+        mineField.move(heading);
     }
 
 }
