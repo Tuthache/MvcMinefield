@@ -41,45 +41,81 @@ public class MineField extends Model{
         switch (heading){
             case W: {
                 playerY--;
+                if (playerY < 0){
+                    playerY = 0;
+                }
                 changed();
                 break;
             }
             case SW: {
                 playerY--;
                 playerX++;
+                if (playerY < 0){
+                    playerY = 0;
+                }
+                if (playerX > 19) {
+                    playerX = 19;
+                }
                 changed();
                 break;
             }
             case NW: {
                 playerY--;
                 playerX--;
+                if (playerY < 0){
+                    playerY = 0;
+                }
+                if (playerX < 0) {
+                    playerX = 0;
+                }
                 changed();
                 break;
             }
             case N: {
                 playerX--;
+                if (playerX < 0) {
+                    playerX = 0;
+                }
                 changed();
                 break;
             }
             case S: {
                 playerX++;
+                if (playerX > 19) {
+                    playerX = 19;
+                }
                 changed();
                 break;
             }
             case E: {
                 playerY++;
+                if (playerY > 19){
+                    playerY = 19;
+                }
                 changed();
                 break;
             }
             case SE: {
                 playerY++;
                 playerX++;
+                if (playerY > 19){
+                    playerY = 19;
+                }
+                if (playerX > 19) {
+                    playerX = 19;
+                }
                 changed();
                 break;
             }
             case NE: {
                 playerY++;
                 playerX--;
+                if (playerY > 19){
+                    playerY = 19;
+                }
+                if (playerX < 0) {
+                    playerX = 0;
+                }
                 changed();
                 break;
             }
@@ -89,10 +125,13 @@ public class MineField extends Model{
         Cell current = grid[x][y];
         if(!current.getHasTraversed()){
             current.setHasTraversed(true);
-            if (current == goal){
+            if (current == grid[gridSize - 1][gridSize - 1]){
                 JOptionPane.showMessageDialog(null, "You beat the game!");
+                System.exit(0);
+
             } else if (current.getHasMine()){
                 JOptionPane.showMessageDialog(null, "You hit a mine!");
+                System.exit(0);
             } else {
                 current.setText(Integer.toString(current.getMinesNearby()));
             }

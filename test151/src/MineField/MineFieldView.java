@@ -9,6 +9,7 @@ public class MineFieldView extends View{
     private Cell cells[][];
     public MineFieldView(MineField m) {
         super(m);
+        propertyChange(null);
     }
     public void propertyChange(PropertyChangeEvent change) {
         removeAll();
